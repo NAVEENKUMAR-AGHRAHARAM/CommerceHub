@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { ShoppingCart, Eye } from 'lucide-react';
 import { addToCart } from '../store/slices/cartSlice';
 import Rating from './Rating';
+import { getCorrectImageUrl, handleImageError } from '../utils/imageUtils';
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -15,8 +16,9 @@ const ProductCard = ({ product }) => {
     <div className="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden group border border-gray-100 flex flex-col h-full">
       <Link to={`/product/${product._id}`} className="relative block overflow-hidden aspect-[4/5]">
         <img
-          src={product.image}
+          src={getCorrectImageUrl(product.image)}
           alt={product.name}
+          onError={handleImageError}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
         />
         <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">

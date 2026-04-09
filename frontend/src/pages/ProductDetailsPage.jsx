@@ -7,6 +7,7 @@ import { addToCart, setBuyNowItem } from '../store/slices/cartSlice';
 import Rating from '../components/Rating';
 import Loader from '../components/Loader';
 import { toast } from '../utils/toast';
+import { getCorrectImageUrl, handleImageError } from '../utils/imageUtils';
 
 const ProductDetailsPage = () => {
   const { id: productId } = useParams();
@@ -61,8 +62,9 @@ const ProductDetailsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div className="rounded-2xl overflow-hidden shadow-md">
           <img
-            src={product.image}
+            src={getCorrectImageUrl(product.image)}
             alt={product.name}
+            onError={handleImageError}
             className="w-full object-cover h-96"
           />
         </div>

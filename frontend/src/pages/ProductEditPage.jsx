@@ -8,6 +8,7 @@ import {
 } from '../store/slices/productsApiSlice';
 import Loader from '../components/Loader';
 import { toast } from '../utils/toast';
+import { getCorrectImageUrl, handleImageError } from '../utils/imageUtils';
 
 const ProductEditPage = () => {
   const { id: productId } = useParams();
@@ -123,7 +124,19 @@ const ProductEditPage = () => {
                   className="text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
                   onChange={uploadFileHandler}
                 />
-                {loadingUpload && <div className="text-xs text-indigo-600 mt-1 italic">Uploading...</div>}
+                <div className="mt-4 p-2 border border-gray-100 rounded-2xl bg-gray-50 flex items-center justify-center overflow-hidden h-32 w-32 mx-auto">
+                    {image ? (
+                        <img 
+                            src={getCorrectImageUrl(image)} 
+                            alt="preview" 
+                            className="h-full w-full object-cover rounded-xl"
+                            onError={handleImageError}
+                        />
+                    ) : (
+                        <span className="text-[10px] text-gray-400 font-bold uppercase">No Preview</span>
+                    )}
+                </div>
+                {loadingUpload && <div className="text-xs text-indigo-600 mt-1 italic text-center">Uploading...</div>}
               </div>
 
               <div className="space-y-2">

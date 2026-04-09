@@ -11,6 +11,7 @@ import {
 } from '../store/slices/ordersApiSlice';
 import Loader from '../components/Loader';
 import { toast } from '../utils/toast';
+import { getCorrectImageUrl, handleImageError } from '../utils/imageUtils';
 
 const OrderPage = () => {
   const { id } = useParams();
@@ -260,7 +261,7 @@ const OrderPage = () => {
             <div className="space-y-3">
               {order.orderItems.map((item) => (
                 <div key={item._id} className="flex items-center gap-4">
-                  <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-lg" />
+                  <img src={getCorrectImageUrl(item.image)} alt={item.name} onError={handleImageError} className="w-12 h-12 object-cover rounded-lg" />
                   <Link to={`/product/${item.product}`} className="flex-1 text-sm text-indigo-600 hover:underline">{item.name}</Link>
                   <span className="text-sm text-gray-600">{item.qty} × ₹{item.price}</span>
                 </div>

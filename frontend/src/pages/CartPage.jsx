@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
 import { addToCart, removeFromCart, clearBuyNow } from '../store/slices/cartSlice';
 import { useNavigate } from 'react-router-dom';
+import { getCorrectImageUrl, handleImageError } from '../utils/imageUtils';
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ const CartPage = () => {
         <div className="lg:col-span-2 space-y-4">
           {cartItems.filter(item => item !== null).map((item) => (
             <div key={item._id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex gap-4">
-              <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-xl" />
+              <img src={getCorrectImageUrl(item.image)} alt={item.name} onError={handleImageError} className="w-20 h-20 object-cover rounded-xl" />
               <div className="flex-1">
                 <Link to={`/product/${item._id}`} className="font-semibold text-gray-800 hover:text-indigo-600 transition-colors">
                   {item.name}
