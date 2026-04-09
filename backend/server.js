@@ -19,8 +19,24 @@ connectDB();
 
 const app = express();
 
-// ✅ FIXED CORS (allows all for now)
-app.use(cors());
+// ✅ Updated CORS for Production
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
 
 // Body parser middleware
 app.use(express.json());
