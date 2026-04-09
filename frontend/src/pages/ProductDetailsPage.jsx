@@ -42,7 +42,11 @@ const ProductDetailsPage = () => {
 
   const buyNowHandler = () => {
     dispatch(setBuyNowItem({ ...product, qty }));
-    navigate('/checkout');
+    if (!userInfo) {
+      navigate('/login?redirect=/checkout');
+    } else {
+      navigate('/checkout');
+    }
   };
 
   if (isLoading) return <Loader />;

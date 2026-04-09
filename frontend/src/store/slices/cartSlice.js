@@ -29,6 +29,13 @@ const updateCart = (state) => {
     state.shippingPrice = shippingPrice;
     state.taxPrice = taxPrice;
     state.totalPrice = totalPrice;
+  } else {
+    // If there's a buyNowItem, ensure prices are set for it
+    const { itemsPrice, shippingPrice, taxPrice, totalPrice } = calcPrices([state.buyNowItem]);
+    state.itemsPrice = itemsPrice;
+    state.shippingPrice = shippingPrice;
+    state.taxPrice = taxPrice;
+    state.totalPrice = totalPrice;
   }
 
   localStorage.setItem('cart', JSON.stringify(state));
@@ -44,7 +51,7 @@ const getInitialState = () => {
     }
     return {
       ...parsed,
-      buyNowItem: null // Reset Buy Now state on reload
+      buyNowItem: parsed.buyNowItem || null
     };
   }
   return {
@@ -82,8 +89,8 @@ const cartSlice = createSlice({
       state.shippingPrice = shippingPrice;
       state.taxPrice = taxPrice;
       state.totalPrice = totalPrice;
-      // Note: We don't save buyNowItem to localStorage to keep it transient
-      return state;
+      // Save buyNowItem to localStorage to keep it persistent across refreshes
+      return updateCart(state);
     },
     clearBuyNow: (state) => {
       state.buyNowItem = null;

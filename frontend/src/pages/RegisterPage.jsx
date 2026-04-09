@@ -28,6 +28,10 @@ const RegisterPage = () => {
       toast.error('Passwords do not match');
       return;
     }
+    if (!email.endsWith('@gmail.com')) {
+      toast.error('Please use a Gmail address (e.g., example@gmail.com)');
+      return;
+    }
     try {
       const res = await register({ name, email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
@@ -47,7 +51,7 @@ const RegisterPage = () => {
         <form onSubmit={submitHandler} className="space-y-5">
           {[
             { label: 'Full Name', type: 'text', val: name, setter: setName, icon: User, ph: 'John Doe' },
-            { label: 'Email', type: 'email', val: email, setter: setEmail, icon: Mail, ph: 'you@example.com' },
+            { label: 'Email', type: 'email', val: email, setter: setEmail, icon: Mail, ph: 'you@gmail.com' },
             { label: 'Password', type: 'password', val: password, setter: setPassword, icon: Lock, ph: '••••••••' },
             { label: 'Confirm Password', type: 'password', val: confirmPassword, setter: setConfirmPassword, icon: Lock, ph: '••••••••' },
           ].map(({ label, type, val, setter, icon: Icon, ph }) => (

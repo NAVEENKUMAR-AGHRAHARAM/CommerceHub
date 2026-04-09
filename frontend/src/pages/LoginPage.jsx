@@ -23,6 +23,10 @@ const LoginPage = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (!email.endsWith('@gmail.com')) {
+      toast.error('Please use a Gmail address (e.g., example@gmail.com)');
+      return;
+    }
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
@@ -49,7 +53,7 @@ const LoginPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
-                placeholder="you@example.com"
+                placeholder="you@gmail.com"
               />
             </div>
           </div>
@@ -86,9 +90,6 @@ const LoginPage = () => {
           </Link>
         </div>
 
-        <div className="mt-4 p-3 bg-gray-50 rounded-lg text-xs text-gray-500">
-          <strong>Demo:</strong> admin@email.com / admin123
-        </div>
       </div>
     </div>
   );

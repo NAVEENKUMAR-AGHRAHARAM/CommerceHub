@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, CreditCard, Package, Trash2 } from 'lucide-react';
@@ -15,6 +15,7 @@ const CheckoutPage = () => {
   const { userInfo } = useSelector((s) => s.auth);
 
   const [step, setStep] = useState(0);
+  const [isOrdering, setIsOrdering] = useState(false);
   const [address, setAddress] = useState(shippingAddress.address || '');
   const [city, setCity] = useState(shippingAddress.city || '');
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || '');
@@ -25,13 +26,15 @@ const CheckoutPage = () => {
 
   const activeItems = buyNowItem ? [buyNowItem] : cartItems.filter(x => x !== null);
 
-  if (activeItems.length === 0) {
-    navigate('/cart');
-    return null;
-  }
+  useEffect(() => {
+    if (!userInfo) {
+      navigate('/login?redirect=/checkout', { replace: true });
+    } else if (activeItems.length === 0 && !isOrdering) {
+      navigate('/cart');
+    }
+  }, [userInfo, activeItems, navigate, isOrdering]);
 
-  if (!userInfo) {
-    navigate('/login?redirect=/checkout', { replace: true });
+  if (!userInfo || (activeItems.length === 0 && !isOrdering)) {
     return null;
   }
 
@@ -48,6 +51,7 @@ const CheckoutPage = () => {
   };
 
   const placeOrderHandler = async () => {
+    setIsOrdering(true);
     try {
       const res = await createOrder({
         orderItems: activeItems,
@@ -68,6 +72,7 @@ const CheckoutPage = () => {
       toast.success('Order placed successfully!');
       navigate(`/order/${res._id}`);
     } catch (err) {
+      setIsOrdering(false);
       toast.error(err?.data?.message || 'Failed to place order');
     }
   };

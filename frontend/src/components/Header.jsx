@@ -80,8 +80,8 @@ const Header = () => {
     <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 text-2xl font-black text-indigo-600 hover:opacity-80 transition-opacity flex-shrink-0">
-          <Package className="w-8 h-8" />
+        <Link to="/" className="flex items-center gap-2 text-2xl font-black text-blue-600 hover:opacity-80 transition-opacity flex-shrink-0">
+          <img src="/logo.png" alt="CommerceHub" className="w-10 h-10 object-contain" />
           <span className="hidden sm:block">CommerceHub</span>
         </Link>
 
@@ -97,9 +97,9 @@ const Header = () => {
                 setSearchInput(e.target.value);
                 setShowSuggestions(true);
               }}
-              className="w-full bg-gray-50 border border-transparent rounded-full py-2 pl-10 pr-10 text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:border-indigo-500 transition-all outline-none"
+              className="w-full bg-blue-50/80 border border-blue-200 rounded-full py-2.5 pl-11 pr-10 text-sm focus:ring-4 focus:ring-blue-600/10 focus:bg-white focus:border-blue-600 transition-all outline-none"
             />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-blue-600" />
             {searchInput && (
               <button 
                 type="button"

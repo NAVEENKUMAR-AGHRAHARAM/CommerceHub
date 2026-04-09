@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+dotenv.config();
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
@@ -11,30 +12,19 @@ import orderRoutes from './routes/orderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import path from 'path';
 
-dotenv.config();
-
 const port = process.env.PORT || 5000;
 
 connectDB();
 
 const app = express();
 
-// ✅ Updated CORS for Production
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:5173',
-  process.env.FRONTEND_URL
-].filter(Boolean);
-
 app.use(cors({
-  origin: (origin, callback) => {
-    // allow requests with no origin (like mobile apps or curl requests)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+  ],
   credentials: true,
 }));
 
@@ -55,7 +45,7 @@ const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/', (req, res) => {
-  res.send('API is running...');
+  res.send('API is running... v2');
 });
 
 app.use(notFound);

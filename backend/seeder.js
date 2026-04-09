@@ -12,18 +12,18 @@ connectDB();
 const users = [
   {
     name: 'Admin User',
-    email: 'admin@email.com',
+    email: 'admin@gmail.com',
     password: 'admin123',
     isAdmin: true,
   },
   {
     name: 'John Doe',
-    email: 'john@email.com',
+    email: 'john@gmail.com',
     password: '123456',
   },
   {
     name: 'Jane Doe',
-    email: 'jane@email.com',
+    email: 'jane@gmail.com',
     password: '123456',
   },
 ];
