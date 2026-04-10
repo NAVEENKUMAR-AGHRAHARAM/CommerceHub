@@ -28,15 +28,13 @@ mernstack/
 - README.md
 Environment Variables
 Create a `.env` file inside the backend folder and add:
-MONGO_URI=your_mongodb_connection_string  
-JWT_SECRET=your_secret_key  
-PORT=5000  
+MONGO_URI  
+JWT_SECRET 
+PORT NUMBER
 Running the Project Locally
 Backend:
-cd backend  
-npm install  
-npm run dev  
+cd backend   
+npm start
 Frontend:
 cd frontend  
-npm install  
-npm run dev  
+npm start
